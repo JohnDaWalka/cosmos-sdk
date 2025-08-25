@@ -1244,6 +1244,12 @@ func (app *BaseApp) Close() error {
 		}
 	}
 
+	// Close optimistic execution if running
+	if app.optimisticExec != nil {
+		app.logger.Info("Closing optimistic execution")
+		app.optimisticExec.Abort()
+	}
+
 	return errors.Join(errs...)
 }
 
