@@ -1,10 +1,19 @@
 plugins {
-    alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.kotlinSerialization)
+    kotlin("multiplatform") version "2.0.21"
+    // id("com.android.library") version "8.3.2" // Temporarily disabled 
+    kotlin("plugin.serialization") version "2.0.21"
 }
 
 kotlin {
-    jvm() // Add JVM target for testing
+    // androidTarget {  // Temporarily disabled
+    //     compilations.all {
+    //         kotlinOptions {
+    //             jvmTarget = "21"
+    //         }
+    //     }
+    // }
+    
+    jvm() // JVM target for testing
 
     // Apple platforms
     iosX64()
@@ -30,8 +39,26 @@ kotlin {
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }
+        
+        // androidMain.dependencies {  // Temporarily disabled
+        //     implementation(libs.kotlinx.coroutines.core)
+        // }
     }
 }
+
+// android {  // Temporarily disabled
+//     namespace = "com.maurofanelli.app.core"
+//     compileSdk = 34
+//
+//     defaultConfig {
+//         minSdk = 24
+//     }
+//     
+//     compileOptions {
+//         sourceCompatibility = JavaVersion.VERSION_21
+//         targetCompatibility = JavaVersion.VERSION_21
+//     }
+// }
 
 // Gradle task alias for assembling Apple framework
 tasks.register("assembleAppleFramework") {

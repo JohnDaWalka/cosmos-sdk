@@ -1,7 +1,7 @@
 plugins {
-    alias(libs.plugins.androidApplication)
-    alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.compose.compiler)
+    id("com.android.application") version "8.3.2"
+    kotlin("multiplatform")
+    id("org.jetbrains.kotlin.plugin.compose") version "2.0.21"
 }
 
 kotlin {

@@ -1,0 +1,39 @@
+# Gradle
+.gradle/
+build/
+
+# Android
+*.apk
+*.aab
+*.ap_
+*.dex
+local.properties
+google-services.json
+GoogleService-Info.plist
+*.jks
+*.p8
+*.mobileprovision
+
+# iOS
+*.xcarchive
+DerivedData/
+*.hmap
+*.ipa
+*~.nib
+*.dSYM.zip
+*.dSYM
+
+# Kotlin/Native
+*.klib
+
+# IDE
+.idea/
+*.swp
+*.swo
+*~
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db

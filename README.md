@@ -110,3 +110,113 @@ Module Dependencies are the modules that an application may depend on and which 
 ## Disambiguation
 
 This Cosmos SDK project is not related to the [React-Cosmos](https://github.com/react-cosmos/react-cosmos) project (yet). Many thanks to Evan Coury and Ovidiu [(@skidding)](https://github.com/skidding) for this Github organization name. As per our agreement, this disambiguation notice will stay here.
+
+## Mobile Modules Overview
+
+This repository includes mobile application scaffolding with Kotlin Multiplatform (KMP) support. The mobile modules are located in the `mobile/` directory and are completely independent from the main Cosmos SDK Go codebase.
+
+### Architecture
+
+```
+mobile/
+├── core/                  # KMP shared module
+│   ├── commonMain/        # Shared Kotlin code
+│   ├── iosMain/          # iOS-specific implementations  
+│   └── jvmMain/          # JVM-specific implementations
+├── androidApp/           # Android application (planned)
+├── ios/                  # iOS/tvOS/watchOS applications (MarOS)
+│   └── MarOS.xcodeproj   # Xcode project with three schemes
+└── gradle/               # Version catalog and build configuration
+```
+
+### Modules
+
+- **Core KMP Module** (`mobile/core`): Shared business logic with platform-specific implementations
+  - Targets: JVM, iOS (arm64, x64, simulator), tvOS, watchOS
+  - Dependencies: Coroutines, Serialization, DateTime
+  - Sample Platform detection and Greeting functionality
+
+- **MarOS Apps** (`mobile/ios`): Native Apple platform applications
+  - **MarOS** (iOS): Bundle ID `com.maurofanelli.app`
+  - **MarOS-tvOS** (tvOS): Bundle ID `com.maurofanelli.app.tv`  
+  - **MarOS-watchOS** (watchOS): Bundle ID `com.maurofanelli.app.watch`
+  - Marketing Display Name: "Mar-OS"
+
+- **Android App** (`mobile/androidApp`): Android application with Jetpack Compose (planned)
+  - Package: `com.maurofanelli.app`
+  - Min SDK: 24, Target SDK: 34
+
+### Building
+
+#### Building KMP Core
+
+```bash
+cd mobile
+./gradlew :core:build
+./gradlew :core:jvmTest
+```
+
+#### Building Apple Apps
+
+1. Generate XCFramework (optional):
+```bash
+cd mobile
+./gradlew :core:assembleAppleFramework
+```
+
+2. Open in Xcode:
+```bash
+open mobile/ios/MarOS.xcodeproj
+```
+
+3. Select desired scheme (MarOS, MarOS-tvOS, or MarOS-watchOS) and build
+
+#### Building Android (Currently Disabled)
+
+Android builds are temporarily disabled due to AGP version compatibility issues. This will be resolved in a future update.
+
+```bash
+# When re-enabled:
+cd mobile
+./gradlew :androidApp:assembleDebug
+```
+
+### Secrets & Signing
+
+The following files are gitignored and need to be provided for release builds:
+
+#### Android Signing (planned)
+- `google-services.json` - Firebase configuration
+- Keystore files (`*.jks`) 
+- Environment variables:
+  - `ANDROID_KEYSTORE_BASE64` - Base64 encoded keystore
+  - `ANDROID_KEYSTORE_PASSWORD` - Keystore password
+  - `ANDROID_KEY_ALIAS` - Key alias name
+  - `ANDROID_KEY_ALIAS_PASSWORD` - Key password
+
+#### Apple Signing
+- `GoogleService-Info.plist` - Firebase configuration for iOS
+- Signing certificates (`*.p8`)
+- Provisioning profiles (`*.mobileprovision`)
+- Manual signing configuration in Xcode for now
+
+#### Sample Placeholder Files
+Create these files locally from templates:
+- `google-services.sample.json` → `google-services.json`
+- `GoogleService-Info.sample.plist` → `GoogleService-Info.plist`
+
+### CI/CD
+
+The repository includes a GitHub Actions workflow (`.github/workflows/ci.yml`) that:
+
+- **Apple Builds**: Tests iOS, tvOS, and watchOS on `macos-14`
+- **KMP Core**: Tests the shared module on `ubuntu-latest`  
+- **Android**: Planned for future implementation
+
+### Future Enhancements
+
+- Release workflow automation with TestFlight/Play Store distribution
+- Crash reporting integration (Firebase Crashlytics)
+- Dependency injection framework integration
+- Test coverage targets and reporting
+- Notarization for macOS distribution (if applicable)

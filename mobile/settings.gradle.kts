@@ -16,4 +16,4 @@ dependencyResolutionManagement {
 rootProject.name = "mobile"
 
 include(":core")
-// include(":androidApp")
+// include(":androidApp") // Temporarily disabled due to AGP version issues
