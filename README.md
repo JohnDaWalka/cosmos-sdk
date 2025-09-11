@@ -110,3 +110,59 @@ Module Dependencies are the modules that an application may depend on and which 
 ## Disambiguation
 
 This Cosmos SDK project is not related to the [React-Cosmos](https://github.com/react-cosmos/react-cosmos) project (yet). Many thanks to Evan Coury and Ovidiu [(@skidding)](https://github.com/skidding) for this Github organization name. As per our agreement, this disambiguation notice will stay here.
+
+## Mobile Modules Overview
+
+The Cosmos SDK now includes mobile support through Kotlin Multiplatform (KMP) and native Apple applications under the `mobile/` directory. The mobile architecture consists of:
+
+- **Core Module** (`mobile/core/`): Kotlin Multiplatform shared library containing business logic and platform abstractions
+- **Android App** (`mobile/androidApp/`): Native Android application with Jetpack Compose UI calling into the core module
+- **Apple Platforms** (`mobile/ios/`): Native iOS, tvOS, and watchOS applications (branded as "Mar-OS") with SwiftUI interfaces
+
+The mobile components use the reverse domain `com.maurofanelli.app` with platform-specific suffixes (`.tv` for tvOS, `.watch` for watchOS).
+
+### Building Android
+
+```bash
+cd mobile
+./gradlew :androidApp:assembleDebug
+./gradlew :core:build
+```
+
+### Building Apple
+
+First, build the KMP XCFramework:
+```bash
+cd mobile
+./gradlew :core:assembleAppleFramework
+```
+
+Then open the Xcode project:
+```bash
+open mobile/ios/MarOS.xcodeproj
+```
+
+Build the desired target (MarOS for iOS, MarOS-tvOS for tvOS, MarOS-watchOS for watchOS) using Xcode.
+
+### Secrets & Signing
+
+#### Android Keystore Environment Variables
+- `ANDROID_KEYSTORE_BASE64`: Base64-encoded keystore file
+- `ANDROID_KEYSTORE_PASSWORD`: Keystore password
+- `ANDROID_KEY_ALIAS`: Key alias name
+- `ANDROID_KEY_ALIAS_PASSWORD`: Key alias password
+
+#### Firebase Configuration (Placeholders)
+- `mobile/androidApp/google-services.sample.json`: Sample Android Firebase config
+- `mobile/ios/GoogleService-Info.sample.plist`: Sample iOS Firebase config
+
+#### Apple Signing
+Apple signing must be configured manually in Xcode. Configure your development team and certificates in the MarOS.xcodeproj project settings.
+
+### Future Enhancements
+- Release workflow automation
+- Crash reporting integration (Firebase Crashlytics)
+- Dependency injection frameworks
+- Test coverage targets
+- Automated release signing and notarization
+- Distribution workflows (TestFlight / Play Store)
