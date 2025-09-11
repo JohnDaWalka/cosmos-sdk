@@ -17,4 +17,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "MarOS-Mobile"
 include(":core")
-//include(":androidApp")
+//include(":androidApp") // Commented out due to AGP connectivity issues
