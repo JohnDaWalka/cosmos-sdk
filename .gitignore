@@ -24,6 +24,10 @@ simapp/simd/simd
 go.work
 go.work.sum
 
+# Rust/Cargo
+target/
+Cargo.lock
+
 # Data - ideally these don't exist
 baseapp/data/*
 client/lcd/keys/*
