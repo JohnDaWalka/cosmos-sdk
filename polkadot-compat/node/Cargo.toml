@@ -1,0 +1,17 @@
+[package]
+name = "cosmos-polkadot-compat"
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+description = "Cosmos SDK compatibility layer for Polkadot ecosystem"
+
+[dependencies]
+# For now, just include basic Rust std functionality
+# Substrate dependencies will be added incrementally
+
+[features]
+default = ["std"]
+std = []

@@ -1,0 +1,22 @@
+[package]
+name = "polkadot-compat"
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+description = "Cosmos SDK compatibility layer for Polkadot ecosystem"
+
+[lib]
+name = "polkadot_compat"
+crate-type = ["rlib", "cdylib"]
+
+[dependencies]
+serde = { workspace = true }
+serde_json = "1.0"
+libc = "0.2"
+
+[features]
+default = ["std"]
+std = []
