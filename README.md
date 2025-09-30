@@ -36,13 +36,38 @@ The Cosmos SDK is a framework for building blockchain applications. [CometBFT (B
 
 **Note**: Always use the latest maintained [Go](https://go.dev/dl) version for building Cosmos SDK applications.
 
-## Quick Start
+## 🚀 Quick Start
+
+### New to Cosmos SDK?
+
+This repository contains a **fully implemented Cosmos SDK Go backend** with comprehensive documentation:
+
+- **[QUICKSTART.md](./QUICKSTART.md)** - Step-by-step guide to get started
+- **[IMPLEMENTATION.md](./IMPLEMENTATION.md)** - Architecture and development guide
+- **[IMPLEMENTATION_SUMMARY.md](./IMPLEMENTATION_SUMMARY.md)** - Complete implementation overview
+- **[examples/simple-app/](./examples/simple-app/)** - Working example application
+
+### Build and Run
+
+```bash
+# Update dependencies
+go mod tidy && cd simapp && go mod tidy && cd ..
+
+# Build the application
+make build
+
+# Initialize and run a node
+./build/simd init mynode --chain-id mychain
+./build/simd start
+```
+
+### Learn More
 
 To learn how the Cosmos SDK works from a high-level perspective, see the Cosmos SDK [High-Level Intro](https://docs.cosmos.network/v0.50/learn/intro/overview).
 
-If you want to get started quickly and learn how to build on top of Cosmos SDK, visit [Cosmos SDK Tutorials](https://tutorials.cosmos.network). You can also fork the tutorial's repository to get started building your own Cosmos SDK application.
+For tutorials and guides, visit [Cosmos SDK Tutorials](https://tutorials.cosmos.network). You can also fork the tutorial's repository to get started building your own Cosmos SDK application.
 
-For more information, see the [Cosmos SDK Documentation](https://docs.cosmos.network).
+For comprehensive documentation, see the [Cosmos SDK Documentation](https://docs.cosmos.network).
 
 ## Contributing
 
