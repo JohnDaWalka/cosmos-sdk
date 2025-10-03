@@ -1,0 +1,207 @@
+name: Apple Platforms CI (iOS, watchOS, tvOS)
+
+# Trigger workflow on push and pull requests to the main branch
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+# Use macOS 14 for compatibility with latest Xcode and Apple platforms
+jobs:
+  # Build and test for iOS platform
+  build-ios:
+    name: Build and Test iOS
+    runs-on: macos-14
+    
+    steps:
+      # Checkout the Cosmos SDK repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      # Select Xcode version for iOS builds
+      - name: Select Xcode version
+        run: sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+      
+      # Display Xcode version for debugging
+      - name: Display Xcode version
+        run: xcodebuild -version
+      
+      # Resolve Swift Package Manager dependencies for Cosmos SDK
+      # This step ensures all SPM dependencies are downloaded and resolved
+      - name: Resolve SPM dependencies
+        run: |
+          if [ -f "Package.swift" ]; then
+            swift package resolve
+          else
+            echo "Note: No Package.swift found. This is expected for the Cosmos SDK Go project."
+            echo "This workflow is prepared for future Swift/iOS integration."
+          fi
+      
+      # Build for iOS platform using xcodebuild
+      # Replace with actual Cosmos SDK iOS project/workspace when available
+      - name: Build for iOS
+        run: |
+          if [ -d "CosmosSDK.xcodeproj" ] || [ -d "CosmosSDK.xcworkspace" ]; then
+            xcodebuild build \
+              -project CosmosSDK.xcodeproj \
+              -scheme CosmosSDK-iOS \
+              -destination 'platform=iOS Simulator,name=iPhone 15,OS=latest' \
+              -configuration Release \
+              CODE_SIGN_IDENTITY="" \
+              CODE_SIGNING_REQUIRED=NO \
+              ONLY_ACTIVE_ARCH=NO
+          else
+            echo "Note: No Xcode project found for Cosmos SDK."
+            echo "This workflow is prepared for future iOS integration."
+            echo "Current Cosmos SDK is Go-based. iOS builds will be available when Swift bindings are added."
+          fi
+      
+      # Run tests for iOS platform
+      # Tests will validate Cosmos SDK functionality on iOS
+      - name: Test on iOS Simulator
+        run: |
+          if [ -d "CosmosSDK.xcodeproj" ] || [ -d "CosmosSDK.xcworkspace" ]; then
+            xcodebuild test \
+              -project CosmosSDK.xcodeproj \
+              -scheme CosmosSDK-iOS \
+              -destination 'platform=iOS Simulator,name=iPhone 15,OS=latest' \
+              -configuration Release \
+              CODE_SIGN_IDENTITY="" \
+              CODE_SIGNING_REQUIRED=NO
+          else
+            echo "Note: No Xcode project found for testing."
+            echo "Tests will be available when iOS support is added to Cosmos SDK."
+          fi
+
+  # Build and test for watchOS platform
+  build-watchos:
+    name: Build and Test watchOS
+    runs-on: macos-14
+    
+    steps:
+      # Checkout the Cosmos SDK repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      # Select Xcode version for watchOS builds
+      - name: Select Xcode version
+        run: sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+      
+      # Display Xcode version for debugging
+      - name: Display Xcode version
+        run: xcodebuild -version
+      
+      # Resolve Swift Package Manager dependencies for Cosmos SDK
+      # This ensures all required dependencies are available for watchOS
+      - name: Resolve SPM dependencies
+        run: |
+          if [ -f "Package.swift" ]; then
+            swift package resolve
+          else
+            echo "Note: No Package.swift found. This is expected for the Cosmos SDK Go project."
+            echo "This workflow is prepared for future Swift/watchOS integration."
+          fi
+      
+      # Build for watchOS platform using xcodebuild
+      # Replace with actual Cosmos SDK watchOS project when available
+      - name: Build for watchOS
+        run: |
+          if [ -d "CosmosSDK.xcodeproj" ] || [ -d "CosmosSDK.xcworkspace" ]; then
+            xcodebuild build \
+              -project CosmosSDK.xcodeproj \
+              -scheme CosmosSDK-watchOS \
+              -destination 'platform=watchOS Simulator,name=Apple Watch Series 9 (45mm),OS=latest' \
+              -configuration Release \
+              CODE_SIGN_IDENTITY="" \
+              CODE_SIGNING_REQUIRED=NO \
+              ONLY_ACTIVE_ARCH=NO
+          else
+            echo "Note: No Xcode project found for Cosmos SDK."
+            echo "This workflow is prepared for future watchOS integration."
+            echo "Current Cosmos SDK is Go-based. watchOS builds will be available when Swift bindings are added."
+          fi
+      
+      # Run tests for watchOS platform
+      # Tests validate Cosmos SDK functionality on watchOS
+      - name: Test on watchOS Simulator
+        run: |
+          if [ -d "CosmosSDK.xcodeproj" ] || [ -d "CosmosSDK.xcworkspace" ]; then
+            xcodebuild test \
+              -project CosmosSDK.xcodeproj \
+              -scheme CosmosSDK-watchOS \
+              -destination 'platform=watchOS Simulator,name=Apple Watch Series 9 (45mm),OS=latest' \
+              -configuration Release \
+              CODE_SIGN_IDENTITY="" \
+              CODE_SIGNING_REQUIRED=NO
+          else
+            echo "Note: No Xcode project found for testing."
+            echo "Tests will be available when watchOS support is added to Cosmos SDK."
+          fi
+
+  # Build and test for tvOS platform
+  build-tvos:
+    name: Build and Test tvOS
+    runs-on: macos-14
+    
+    steps:
+      # Checkout the Cosmos SDK repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      # Select Xcode version for tvOS builds
+      - name: Select Xcode version
+        run: sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+      
+      # Display Xcode version for debugging
+      - name: Display Xcode version
+        run: xcodebuild -version
+      
+      # Resolve Swift Package Manager dependencies for Cosmos SDK
+      # Ensures all dependencies specific to tvOS are resolved
+      - name: Resolve SPM dependencies
+        run: |
+          if [ -f "Package.swift" ]; then
+            swift package resolve
+          else
+            echo "Note: No Package.swift found. This is expected for the Cosmos SDK Go project."
+            echo "This workflow is prepared for future Swift/tvOS integration."
+          fi
+      
+      # Build for tvOS platform using xcodebuild
+      # Replace with actual Cosmos SDK tvOS project when available
+      - name: Build for tvOS
+        run: |
+          if [ -d "CosmosSDK.xcodeproj" ] || [ -d "CosmosSDK.xcworkspace" ]; then
+            xcodebuild build \
+              -project CosmosSDK.xcodeproj \
+              -scheme CosmosSDK-tvOS \
+              -destination 'platform=tvOS Simulator,name=Apple TV,OS=latest' \
+              -configuration Release \
+              CODE_SIGN_IDENTITY="" \
+              CODE_SIGNING_REQUIRED=NO \
+              ONLY_ACTIVE_ARCH=NO
+          else
+            echo "Note: No Xcode project found for Cosmos SDK."
+            echo "This workflow is prepared for future tvOS integration."
+            echo "Current Cosmos SDK is Go-based. tvOS builds will be available when Swift bindings are added."
+          fi
+      
+      # Run tests for tvOS platform
+      # Tests validate Cosmos SDK functionality on tvOS
+      - name: Test on tvOS Simulator
+        run: |
+          if [ -d "CosmosSDK.xcodeproj" ] || [ -d "CosmosSDK.xcworkspace" ]; then
+            xcodebuild test \
+              -project CosmosSDK.xcodeproj \
+              -scheme CosmosSDK-tvOS \
+              -destination 'platform=tvOS Simulator,name=Apple TV,OS=latest' \
+              -configuration Release \
+              CODE_SIGN_IDENTITY="" \
+              CODE_SIGNING_REQUIRED=NO
+          else
+            echo "Note: No Xcode project found for testing."
+            echo "Tests will be available when tvOS support is added to Cosmos SDK."
+          fi
