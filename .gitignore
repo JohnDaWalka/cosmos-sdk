@@ -64,3 +64,21 @@ debug_container.log
 /x/genutil/config/priv_validator_key.json
 /x/genutil/data/priv_validator_state.json
 simapp/simapp.test
+
+# Mobile secrets & signing
+mobile/androidApp/google-services.json
+mobile/ios/GoogleService-Info.plist
+*.keystore
+*.jks
+*.p8
+*.mobileprovision
+mobile/androidApp/src/main/res/values/google-services.xml
+
+# Mobile build artifacts
+mobile/build/
+mobile/core/build/
+mobile/androidApp/build/
+mobile/ios/build/
+mobile/ios/DerivedData/
+mobile/.gradle/
+mobile/local.properties

@@ -1,0 +1,5 @@
+package com.maurofanelli.app.core
+
+interface Platform {
+    val name: String
+}
