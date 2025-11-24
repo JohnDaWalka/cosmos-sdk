@@ -23,7 +23,7 @@ jobs:
     runs-on: macos-14
 
     steps:
-      # Checkout the Cosmos SDK repository
+      # Checkout the MarOS repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -67,7 +67,7 @@ jobs:
     runs-on: macos-14
 
     steps:
-      # Checkout the Cosmos SDK repository
+      # Checkout the MarOS repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -101,7 +101,7 @@ jobs:
     runs-on: macos-14
 
     steps:
-      # Checkout the Cosmos SDK repository
+      # Checkout the MarOS repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
