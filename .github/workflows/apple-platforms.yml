@@ -21,20 +21,20 @@ jobs:
   build-ios:
     name: Build and Test iOS
     runs-on: macos-14
-    
+
     steps:
       # Checkout the Cosmos SDK repository
       - name: Checkout repository
         uses: actions/checkout@v4
-      
+
       # Select Xcode version for iOS builds
       - name: Select Xcode version
         run: sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
-      
+
       # Display Xcode version for debugging
       - name: Display Xcode version
         run: xcodebuild -version
-      
+
       # Build MarOS for iOS platform using xcodebuild
       - name: Build for iOS
         working-directory: mobile/ios
@@ -47,7 +47,7 @@ jobs:
             CODE_SIGN_IDENTITY="" \
             CODE_SIGNING_REQUIRED=NO \
             ONLY_ACTIVE_ARCH=NO
-      
+
       # Run tests for iOS platform
       # Tests validate MarOS functionality on iOS
       - name: Test on iOS Simulator
@@ -65,20 +65,20 @@ jobs:
   build-watchos:
     name: Build and Test watchOS
     runs-on: macos-14
-    
+
     steps:
       # Checkout the Cosmos SDK repository
       - name: Checkout repository
         uses: actions/checkout@v4
-      
+
       # Select Xcode version for watchOS builds
       - name: Select Xcode version
         run: sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
-      
+
       # Display Xcode version for debugging
       - name: Display Xcode version
         run: xcodebuild -version
-      
+
       # Build MarOS for watchOS platform using xcodebuild
       - name: Build for watchOS
         working-directory: mobile/ios
@@ -91,7 +91,7 @@ jobs:
             CODE_SIGN_IDENTITY="" \
             CODE_SIGNING_REQUIRED=NO \
             ONLY_ACTIVE_ARCH=NO
-      
+
       # Note: watchOS typically does not support testing in the same way iOS does
       # Tests are generally not run for watchOS builds
 
@@ -99,20 +99,20 @@ jobs:
   build-tvos:
     name: Build and Test tvOS
     runs-on: macos-14
-    
+
     steps:
       # Checkout the Cosmos SDK repository
       - name: Checkout repository
         uses: actions/checkout@v4
-      
+
       # Select Xcode version for tvOS builds
       - name: Select Xcode version
         run: sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
-      
+
       # Display Xcode version for debugging
       - name: Display Xcode version
         run: xcodebuild -version
-      
+
       # Build MarOS for tvOS platform using xcodebuild
       - name: Build for tvOS
         working-directory: mobile/ios
@@ -125,7 +125,7 @@ jobs:
             CODE_SIGN_IDENTITY="" \
             CODE_SIGNING_REQUIRED=NO \
             ONLY_ACTIVE_ARCH=NO
-      
+
       # Run tests for tvOS platform
       # Tests validate MarOS functionality on tvOS
       - name: Test on tvOS Simulator
